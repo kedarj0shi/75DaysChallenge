@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<string> invalidTransactions(vector<string>& v) {
+        vector<string> ans;
+        unordered_set<string> res;
+        unordered_map<string,vector<vector<string>>> mp;
+        
+        for(auto t: v){
+            stringstream ss(t);
+            vector<string> s(4,"");
+            int i=0;
+            while(getline(ss, s[i++], ','));
+            if(stoi(s[2])>1000)
+                res.insert(t);
+            
+            for(auto i: mp[s[0]]){
+                if(i[3]!=s[3] and abs(stoi(i[1])-stoi(s[1]))<=60){
+                    res.insert(i[0]+","+i[1]+","+i[2]+","+i[3]);
+                    if(!res.count(t))
+                        res.insert(t);                        
+                }
+            }
+            mp[s[0]].push_back({s[0],s[1],s[2],s[3]});            
+        }
+        for(auto i: res)
+            ans.push_back(i);
+        return ans;
+    }
+};
