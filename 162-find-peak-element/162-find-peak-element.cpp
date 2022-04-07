@@ -8,20 +8,14 @@ public:
                 return 0;
             return 1;
         }
-        vector<int> v(n+2,INT_MIN);
-        for(int i=1;i<=n;i++){
-            v[i]=a[i-1];
-        }
-        for(int i: v)
-            cout<<i<<" ";
-        n+=2;
-        int l=0, r=n-1;
+        if(a[n-1]>a[n-2]) return n-1;
+        int l=1, r=n-2;
         
         while(l<=r){
             int mid=(l+r)/2;
-            if(v[mid]>v[mid+1] and v[mid]>v[mid-1])
-                return mid-1;
-            else if(v[mid]<v[mid+1])
+            if(a[mid]>a[mid+1] and a[mid]>a[mid-1])
+                return mid;
+            else if(a[mid]<a[mid+1])
                 l=mid+1;
             else
                 r=mid-1;
