@@ -11,22 +11,22 @@
  */
 class Solution {
 public:
-    void help(TreeNode* root, vector<int>&v){
+    void help(TreeNode* root, TreeNode* &prev, int &mn){
         if(!root) return ;
-        help(root->left,v);
-        v.push_back(root->val);
-        help(root->right,v);
+        help(root->left,prev,mn);
+        if(prev!=NULL){
+            mn=min(mn,root->val-prev->val);
+        }
+        prev=root;
+        help(root->right,prev,mn);
         
     }
     int getMinimumDifference(TreeNode* root) {
         if(!root) return 0;
-        vector<int> v;
         int mn=INT_MAX;
-        help(root,v);
-        // for(int i: v) cout<<i<<" ";
-        for(int i=1;i<v.size();i++){
-            mn=min(mn,v[i]-v[i-1]);
-        }
+        TreeNode* prev=NULL;
+        help(root,prev,mn);
+       
         return mn;
     }
 };
